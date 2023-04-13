@@ -12,6 +12,12 @@ class Vegetation: public Character {
         setLetter('T');
         setMP(0);
     }
+    Vegetation(int y, int x): Character(y, x) {
+        setLetter('T');
+        setMP(5);
+        // setY(y);
+        // setX(x);
+    }
 };
 
 #endif // VEGETATION_H_

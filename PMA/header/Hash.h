@@ -13,6 +13,13 @@ class Hash: public Character {
             setLetter('#');
             setMP(-1);
         }
+
+        Hash(int y, int x): Character(y, x) {
+            setLetter('#');
+            setMP(-1);
+        	// setY(y);
+			// setX(x);
+        }
 };
 
 #endif // HASH_H_

@@ -2,6 +2,7 @@
 #define MAP_H_
 
 #include <iostream>
+
 #include "Character.h"
 #include "Hash.h"
 
@@ -64,7 +65,6 @@ class Map {
             return map[y][x]->getLetter();
         }
 
-        
         Character* getCharacterXY(int y, int x){
             if (y < 0 || y >= Y || x < 0 || x >= X) {
                 //因为初始都是new Character(),所以如果返回nullptr说明超界
@@ -104,10 +104,49 @@ class Map {
             for (int i = 0; i < num; i++) {
                 int x = rand() % X;
                 int y = rand() % Y;
-                if (!place(x, y, new Hash())) {
+                if (!place(y, x, new Hash())) {
                     i--;
                 }
             }
+        }
+
+        bool reachableAt(int yNew, int xNew){
+            if(getXY(yNew, xNew) == ' '){
+                return true;
+            }
+            return false;
+        }
+
+        void moveCharacter(int y, int x, Direction d){
+            int yNew = y, xNew = x;
+            switch (d) {
+                case UP:
+                    yNew--;
+                    break;
+                case DOWN:
+                    yNew++;
+                    break;
+                case LEFT:
+                    xNew--;
+                    break;
+                case RIGHT:
+                    xNew++;
+                    break;
+                case STAY:
+                    break;
+                default:
+                    return;
+            }
+            
+            // cout << "The des is " << getXY(yNew, xNew) << ". " << endl;
+
+            Character* ch = map[y][x];
+            map[y][x] = new Character();
+            map[yNew][xNew] = ch;
+            ch->setY(yNew);
+            ch->setX(xNew);
+            
+            
         }
 
     private:

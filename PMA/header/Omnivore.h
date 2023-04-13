@@ -12,6 +12,12 @@ class Omnivore: public Character {
             setLetter('O');
             setMP(8);
         }
+        Omnivore(int y, int x): Character(y, x) {
+            setLetter('O');
+            setMP(5);
+            // setY(y);
+			// setX(x);
+        }
 };
 
 #endif // OMNIVORE_H_

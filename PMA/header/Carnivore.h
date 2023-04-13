@@ -12,6 +12,13 @@ class Carnivore: public Character {
             setLetter('C');
             setMP(5);
         }
+
+        Carnivore(int y, int x): Character(y, x) {
+            setLetter('C');
+            setMP(5);
+            // setY(y);
+			// setX(x);
+        }
 };
 
 #endif // CARNIVORE_H_

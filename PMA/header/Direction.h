@@ -1,3 +1,10 @@
+#ifndef DIRECTION_H_
+#define DIRECTION_H_
+
+#include <iostream>
+
+using namespace std;
+
 enum Direction {
     UP,
     DOWN,
@@ -5,3 +12,5 @@ enum Direction {
     RIGHT,
     STAY
 };
+
+#endif // DIRECTION_H

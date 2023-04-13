@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Direction.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -16,6 +17,12 @@ class Character {
     public: 
 		Character() {
 			setLetter(' ');
+		}
+
+		Character(int y, int x){
+			setLetter(' ');
+			setY(y);
+			setX(x);
 		}
 
 		char getLetter() {
@@ -51,6 +58,7 @@ class Character {
 		}
 
 		// 提高可读性
+		// getDirection可以合并到move函数中，但是会导致多层嵌套，可读性也会降低，所以我保留了这个设计
 		Direction getDirection(int MP){
 			//0 UP
 			//1 DOWN
@@ -83,6 +91,30 @@ class Character {
 				else{
 					return getDirection(random_num);
 				}
+			}
+		}
+
+		int getNewY(Direction d){
+			if(d == UP){
+				return y - 1;
+			}
+			else if(d == DOWN){
+				return y + 1;
+			}
+			else{
+				return y;
+			}
+		}
+
+		int getNewX(Direction d){
+			if(d == LEFT){
+				return x - 1;
+			}
+			else if(d == RIGHT){
+				return x + 1;
+			}
+			else{
+				return x;
 			}
 		}
 
