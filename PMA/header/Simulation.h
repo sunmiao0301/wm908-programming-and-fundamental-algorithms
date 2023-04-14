@@ -169,7 +169,6 @@ class Simulation {
                     //繁殖 繁殖这一部分代码，有点过分冗余，但是这段细节太多，不敢重构了。
                     float randomValue = static_cast<float>(rand()) / RAND_MAX;
                     if (randomValue < cur->data->getFR()) {
-                        // for(int i = 0; i < 4; i++){
                             //因为繁殖不包括STAY，所以要重新设计
                             Direction* directions = new Direction[4];
                             int count = 0;
@@ -193,7 +192,6 @@ class Simulation {
                             if (count > 0) {
                                 int randomIndex = rand() % count;
                                 Direction randomDirection = directions[randomIndex];
-                                // map->reproduceCharacter();
                                 if(dynamic_cast<Carnivore*>(cur->data)){
                                     Character* carnivore = new Carnivore(cur->data->getNewY(randomDirection), cur->data->getNewX(randomDirection));
                                     map->place(cur->data->getNewY(randomDirection), cur->data->getNewX(randomDirection), carnivore);
@@ -205,10 +203,8 @@ class Simulation {
                                 {
                                     
                                     Character* herbivore = new Herbivore(cur->data->getNewY(randomDirection), cur->data->getNewX(randomDirection));
-                                    // cout << herbivore->getMP();
                                     map->place(cur->data->getNewY(randomDirection), cur->data->getNewX(randomDirection), herbivore);
                                     containerTemp->add(herbivore);
-                                    // containerTemp->print();
                                     herbivoreNum++;
                                     cout << "and reproduce at direction " << DirectionUtil::toString(randomDirection) << endl;
                                 }

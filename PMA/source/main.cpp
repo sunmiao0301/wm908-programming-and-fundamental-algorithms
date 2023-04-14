@@ -98,7 +98,7 @@ void questionFive(){
 	simulation->initCharacter(0, 'C');
 
 	simulation->map->display();
-	simulation->container->print();
+	// simulation->container->print();
 
 	// iii)
 	simulation->run(50);
@@ -108,7 +108,7 @@ int main() {
     srand(time(NULL));
     // questionTwo();
     // questionThree();
-	questionFour();
-    // questionFive();
+	// questionFour();
+    questionFive();
     return 0;
 }
