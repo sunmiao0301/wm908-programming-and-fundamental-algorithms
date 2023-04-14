@@ -12,13 +12,13 @@ class Hash: public Character {
         Hash(): Character() {
             setLetter('#');
             setMP(-1);
+            setHealth(-1);
         }
 
         Hash(int y, int x): Character(y, x) {
             setLetter('#');
             setMP(-1);
-        	// setY(y);
-			// setX(x);
+            setHealth(-1);
         }
 };
 

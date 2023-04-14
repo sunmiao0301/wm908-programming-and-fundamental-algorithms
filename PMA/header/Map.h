@@ -46,6 +46,7 @@ class Map {
             return X;
         }
 
+        //place 代表在一定条件下，在map数据结构中(y, x)位置上放入characterPtr
         bool place(int y, int x, Character* characterPtr) {
             if (y < 0 || y >= Y || x < 0 || x >= X) {
                 return false;
@@ -89,6 +90,7 @@ class Map {
                     // }
                     // cout << "      ";
                     // // cout << "  " << '#' << "   ";
+
                     cout << "  " << getXY(i, j) << "   ";
                 }
                 cout << "|" << endl;
@@ -110,44 +112,103 @@ class Map {
             }
         }
 
-        bool reachableAt(int yNew, int xNew){
-            if(getXY(yNew, xNew) == ' '){
+        bool moveCharacter(int yOld, int xOld, int yNew, int xNew){
+           if(getXY(yNew, xNew) != ' '){
+                return false;
+            }
+            getCharacterXY(yOld, xOld)->decreaseOneHealth();
+
+            // cout << "The des is " << getXY(yNew, xNew) << ". "  ;
+
+            Character* ch = map[yOld][xOld];
+            map[yOld][xOld] = new Character();
+            map[yNew][xNew] = ch;
+            ch->setY(yNew);
+            ch->setX(xNew);
+            return true;
+        }
+        
+        char uppercase(char c){
+            if(c == 'h'){
+                return 'H';
+            }
+            if(c == 'c'){
+                return 'C';
+            }
+            if(c == 'o'){
+                return 'O';
+            }
+            if(c == 't' || c == '\''){
+                return 'T';
+            }
+            return c;
+        }
+
+        bool consumeCharacter(int yOld, int xOld, int yNew, int xNew){
+            //随机的方向超界
+            if(getXY(yNew, xNew) == 'E'){
+                // getCharacterXY(yOld, xOld)->decreaseOneHealth();
+                return false;
+            }
+
+            //自己不能吃自己（当该Character选择不动的时候）
+            if(yOld == yNew && xOld == xNew){
+                // getCharacterXY(yOld, xOld)->decreaseOneHealth();
+                return false;
+            }
+
+            char src = uppercase(getXY(yOld, xOld));
+            char des = uppercase(getXY(yNew, xNew));
+
+            //使用return是因为如果发生了consume，srcCharacter就不需要decreaseOneHealth()
+            if(src == '#' || des == '#'){
+                return false;
+            }
+
+            if(src == 'H' && des == 'T'){
+                getCharacterXY(yOld, xOld)->increaseHealth();
+                getCharacterXY(yNew, xNew)->decreaseHealth();
+                // cout << "The des is " << getXY(yNew, xNew) << ". "  ;
+                return true;
+            }
+
+            if(src == 'C' && des == 'H'){
+                getCharacterXY(yOld, xOld)->increaseHealth();
+                getCharacterXY(yNew, xNew)->decreaseHealth();
+                // cout << "The des is " << getXY(yNew, xNew) << ". "  ;
+                return true;
+            }
+
+            if(src == 'O' && (des == 'T' || des == 'H')){
+                getCharacterXY(yOld, xOld)->increaseHealth();
+                getCharacterXY(yNew, xNew)->decreaseHealth();
+                // cout << "The des is " << getXY(yNew, xNew) << ". "  ;
+                return true;
+            }
+    
+            // getCharacterXY(yOld, xOld)->decreaseOneHealth();
+            return false;
+        }
+
+        // remove 代表从map数据结构中删除(y, x)位置上的Character
+        void remove(int y, int x){
+            map[y][x] = new Character();
+        }
+
+        bool removeCharacter(int y, int x){
+            if(getCharacterXY(y, x)->getHealth() == 0){
+                // Character* ch = map[y][x];
+                // map[y][x] = new Character();
                 return true;
             }
             return false;
         }
 
-        void moveCharacter(int y, int x, Direction d){
-            int yNew = y, xNew = x;
-            switch (d) {
-                case UP:
-                    yNew--;
-                    break;
-                case DOWN:
-                    yNew++;
-                    break;
-                case LEFT:
-                    xNew--;
-                    break;
-                case RIGHT:
-                    xNew++;
-                    break;
-                case STAY:
-                    break;
-                default:
-                    return;
-            }
-            
-            // cout << "The des is " << getXY(yNew, xNew) << ". " << endl;
+        // void reproduceCharacter(){
 
-            Character* ch = map[y][x];
-            map[y][x] = new Character();
-            map[yNew][xNew] = ch;
-            ch->setY(yNew);
-            ch->setX(xNew);
-            
-            
-        }
+        // }
+
+
 
     private:
         // Y refers to number of rows and is always presented first, 

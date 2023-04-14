@@ -11,14 +11,37 @@ class Carnivore: public Character {
         Carnivore(): Character() {
             setLetter('C');
             setMP(5);
+            setHealth(10);
+            setHealthMax(50);
         }
 
         Carnivore(int y, int x): Character(y, x) {
             setLetter('C');
             setMP(5);
-            // setY(y);
-			// setX(x);
+            setHealth(10);
+            setHealthMax(50);
         }
+
+        void increaseHealth() override{
+            Character::increaseHealth();
+            if(getHealth() >= 25){
+                setLetter('C');
+            }
+		}
+
+		void decreaseHealth() override{
+			Character::decreaseHealth();
+            if(getHealth() < 25){
+                setLetter('c');
+            }
+		}
+
+		void decreaseOneHealth() override{
+            Character::decreaseOneHealth();
+            if(getHealth() < 25){
+                setLetter('c');
+            }
+		}
 };
 
 #endif // CARNIVORE_H_

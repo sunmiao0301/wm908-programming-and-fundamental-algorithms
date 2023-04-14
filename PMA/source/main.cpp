@@ -68,14 +68,30 @@ void questionThree() {
 
 	// iii)
 	simulation->run(3);
-
-	
 }
 
+void questionFour() {
+
+	// ii)
+	Simulation* simulation = new Simulation(7, 10);
+
+	simulation->initCharacter(12, '#');
+	simulation->initCharacter(3, 'T');
+	simulation->initCharacter(3, 'H');
+	simulation->initCharacter(3, 'O');
+	simulation->initCharacter(3, 'C');
+
+	simulation->map->display();
+	simulation->container->print();
+
+	// iii)
+	simulation->run(5);
+}
 
 int main() {
     srand(time(NULL));
     // questionTwo();
-    questionThree();
+    // questionThree();
+	questionFour();
     return 0;
 }

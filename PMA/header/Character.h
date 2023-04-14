@@ -13,16 +13,24 @@ class Character {
 		int MP;
 		int x;
 		int y;
+		int health;
+		float FR;
+		int healthPointsConsumed;
+		int healthMax;
 
     public: 
 		Character() {
 			setLetter(' ');
+			setFR(0.5);
+			healthPointsConsumed = 10;
 		}
 
 		Character(int y, int x){
 			setLetter(' ');
 			setY(y);
 			setX(x);
+			setFR(0.5);
+			healthPointsConsumed = 10;
 		}
 
 		char getLetter() {
@@ -55,6 +63,38 @@ class Character {
 
 		void setMP(int MP_){
 			MP = MP_;
+		}
+
+		int getHealth(){
+			return health;
+		}
+
+		void setHealth(int health_){
+			health = health_;
+		}
+
+		double getFR(){
+			return FR;
+		}
+
+		void setFR(float FR_){
+			FR = FR_;
+		}
+
+		int getHealthPointsConsumed(){
+			return healthPointsConsumed;
+		}
+
+		void setHealthPointsConsumed(int healthPointsConsumed_){
+			healthPointsConsumed = healthPointsConsumed_;
+		}
+
+		int getHealthMax(){
+			return healthMax;
+		}
+
+		void setHealthMax(int healthMax_){
+			healthMax = healthMax_;
 		}
 
 		// 提高可读性
@@ -140,6 +180,30 @@ class Character {
 			return true;
 		}
 
+		virtual void increaseHealth(){
+			health += healthPointsConsumed;
+			if(health > healthMax){
+				health = healthMax;
+			}
+		}
+
+		virtual void decreaseHealth(){
+			health -= healthPointsConsumed;
+			if(health < 0){
+				health = 0;
+			}
+		}
+
+		virtual void decreaseOneHealth(){
+			health--;
+			if(health < 0){
+				health = 0;
+			}
+		}
+
+		// Character* reproduct(){
+
+		// }
 };
 
 #endif // CHARACTER_H
