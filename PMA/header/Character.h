@@ -21,7 +21,7 @@ class Character {
     public: 
 		Character() {
 			setLetter(' ');
-			setFR(0.5);
+			setFR(0.03);
 			healthPointsConsumed = 10;
 		}
 
@@ -29,7 +29,7 @@ class Character {
 			setLetter(' ');
 			setY(y);
 			setX(x);
-			setFR(0.5);
+			setFR(0.03);
 			healthPointsConsumed = 10;
 		}
 

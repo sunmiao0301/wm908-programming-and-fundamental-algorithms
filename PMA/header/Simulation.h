@@ -117,7 +117,6 @@ class Simulation {
                     //判断是否死亡而消失：1.移动了 2.被吃了一口 3.没移动也没进食
                     //通过Map的方法判断要去的位置是否 是空位,如果是，就移动。如果不是，就不移动
                     if(map->moveCharacter(yOld, xOld, yNew, xNew)){
-                        // cout << "The des is " << map->getXY(yNew, xNew) << ". "  ;
                         cout << cur->data->getLetter() << " Move from " << "(" << yOld << ", " << xOld << ") to" << "(" << yNew << ", " << xNew << ") ";
                         cout << "The health is " << map->getCharacterXY(yNew, xNew)->getHealth() << endl;
                         //根据最新情况刷新Map和container
@@ -126,10 +125,6 @@ class Simulation {
                             characterCountDecrease(map->getCharacterXY(yNew, xNew));
                             container->remove(map->getCharacterXY(yNew, xNew));
                             map->remove(yNew, xNew);
-
-                            // Character* ch = map->getCharacterXY(yNew, xNew);
-                            // map->remove(yNew, xNew);
-                            // container->remove(ch);
                             cout << "someone hungry to die after moving" << endl;
                             cur = cur->next;
                             continue;
@@ -137,13 +132,10 @@ class Simulation {
                         //如果移动了，就要把用于繁殖的坐标(yForProduct, xForProduct)从(yOld, xOld)变换为(yNew, xNew)
                         yForProduct = yNew;
                         xForProduct = xNew;
-
-                        // cout << cur->data->getLetter() << "Move from " << "(" << yOld << ", " << xOld << ") to" << "(" << yNew << ", " << xNew << ")" << endl;
                     }
                     else{
                         //通过Map的方法判断要去的地方能不能吃,返回false代表STAY
                         if(map->consumeCharacter(yOld, xOld, yNew, xNew)){
-                            // cout << "The des is " << map->getXY(yNew, xNew) << ". "  ;
                             cout << cur->data->getLetter() << " Consume from " << "(" << yOld << ", " << xOld << ") to" << "(" << yNew << ", " << xNew << ") ";
                             cout << "The health of Stronger " << cur->data->getLetter() << " is " << cur->data->getHealth() ;
                             cout << " The health of Weaker " << map->getCharacterXY(yNew, xNew)->getLetter() << " is " << map->getCharacterXY(yNew, xNew)->getHealth() << endl;
@@ -152,27 +144,29 @@ class Simulation {
                                 characterCountDecrease(map->getCharacterXY(yNew, xNew));
                                 container->remove(map->getCharacterXY(yNew, xNew));
                                 map->remove(yNew, xNew);
-                                
-                                // Character* ch = map->getCharacterXY(yNew, xNew);
-                                // map->remove(yNew, xNew);
-                                // container->remove(ch);
                                 cout << "someone hungry to die after being eaten" << endl;
+                                cur = cur->next;
+                                continue;
                             }
                         }
                         else{
                             cur->data->decreaseOneHealth();
                             cout << cur->data->getLetter() << " STAY at " << "(" << yOld << ", " << xOld << ") ";
                             cout << "The health is " << map->getCharacterXY(yOld, xOld)->getHealth() << endl;
-                            // if(map->removeCharacter(yOld, xOld)){
-                            //     characterCountDecrease(cur->data);
-                            //     container->remove(cur->data);
-                            //     map->remove(yOld, xOld);
-                            //     cout << "someone hungry to die without moving and being eaten" << endl;                                
-                            // }
+                            if(map->removeCharacter(yOld, xOld)){
+                                characterCountDecrease(cur->data);
+                                container->remove(cur->data);
+                                map->remove(yOld, xOld);
+                                cout << "someone hungry to die without moving and being eaten" << endl;
+                                cur = cur->next;
+                                continue;
+                            }
                         }
                     }
 
-                    //繁殖
+                    //如果移动和吃 部分完成后还没饿死，就进行繁殖
+
+                    //繁殖 繁殖这一部分代码，有点过分冗余，但是这段细节太多，不敢重构了。
                     float randomValue = static_cast<float>(rand()) / RAND_MAX;
                     if (randomValue < cur->data->getFR()) {
                         // for(int i = 0; i < 4; i++){

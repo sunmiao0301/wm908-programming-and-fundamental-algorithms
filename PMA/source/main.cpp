@@ -85,7 +85,23 @@ void questionFour() {
 	simulation->container->print();
 
 	// iii)
-	simulation->run(5);
+	simulation->run(20);
+}
+
+void questionFive(){
+	Simulation* simulation = new Simulation(14, 14);
+
+	simulation->initCharacter(12, '#');
+	simulation->initCharacter(20, 'T');
+	simulation->initCharacter(20, 'H');
+	simulation->initCharacter(0, 'O');
+	simulation->initCharacter(0, 'C');
+
+	simulation->map->display();
+	simulation->container->print();
+
+	// iii)
+	simulation->run(50);
 }
 
 int main() {
@@ -93,5 +109,6 @@ int main() {
     // questionTwo();
     // questionThree();
 	questionFour();
+    // questionFive();
     return 0;
 }
