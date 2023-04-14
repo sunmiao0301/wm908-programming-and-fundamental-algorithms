@@ -11,14 +11,14 @@ class Carnivore: public Character {
         Carnivore(): Character() {
             setLetter('C');
             setMP(5);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
 
         Carnivore(int y, int x): Character(y, x) {
             setLetter('C');
             setMP(5);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
 

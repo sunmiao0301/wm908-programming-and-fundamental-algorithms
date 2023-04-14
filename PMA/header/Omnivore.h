@@ -11,13 +11,13 @@ class Omnivore: public Character {
         Omnivore(): Character() {
             setLetter('O');
             setMP(8);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
         Omnivore(int y, int x): Character(y, x) {
             setLetter('O');
             setMP(8);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
 

@@ -11,13 +11,13 @@ class Herbivore: public Character {
         Herbivore(): Character() {
             setLetter('H');
             setMP(5);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
         Herbivore(int y, int x): Character(y, x) {
             setLetter('H');
             setMP(5);
-            setHealth(10);
+            setHealth(50);
             setHealthMax(50);
         }
         
