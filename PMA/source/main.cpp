@@ -235,9 +235,50 @@ void questionFiveSix(){
  * 但是我可以设计一个暴力程序，测试不同组合下，哪种组合下生物种类不减少维持的最久。
  */
 
-void questionSeven(){
-    //这一步处，因为我将地形设计为Character中的一类，导致代码会略有冗余
+void questionSevenOne(){
+    //这一步处，因为我将地形设计为Character中的一类,所以我将simulation->initCharacter(12, '#');替换成读取地形即可。
+    //如果要存入更精细的，比如血量信息等，那么就直接存每个Character的坐标，血量信息即可。
+    //此处我按照PMA指导书中的格式例子，就不存血量了。
+    Simulation* simulation = Simulation::load("../map71.txt");
+    simulation->map->display();
+}
+
+void questionSevenTwo(){
+    Simulation* simulation = Simulation::load("../map71.txt");
+    simulation->initCharacter(20, 'T');
+    simulation->initCharacter(20, 'H');
+    simulation->initCharacter(20, 'C');
+    simulation->initCharacter(10, 'O');
+    simulation->run(3);
+}
+
+void questionSevenThree(){
+    Simulation* simulation = new Simulation(14, 14);
+    simulation->initCharacter(12, '#');
+    simulation->initCharacter(20, 'T');
+    simulation->initCharacter(20, 'H');
+    simulation->initCharacter(20, 'C');
+    simulation->initCharacter(10, 'O');
     
+    while (true) {
+        char input;
+        input = cin.get();
+        cin.ignore(256, '\n'); // 忽略缓冲区中的回车键
+        if (input == 's') {
+            simulation->save("../map73.txt");
+            break;
+        }
+        simulation->run();
+    }
+}
+
+void questionSevenFour(){
+    cout << "Reading the simulation stored in 7 iii) ..." << endl;
+    Simulation* simulation = Simulation::load("../map73.txt");
+    simulation->map->display();
+
+    cout << "Run one step" << endl;
+    simulation->run(1);
 }
 
 int main() {
@@ -251,6 +292,11 @@ int main() {
     // questionFiveThree();
     // questionFiveFour();
     // questionFiveFive();
-    questionFiveSix();
+    // questionFiveSix();
+    // questionSevenOne();
+    // questionSevenTwo();
+    // questionSevenThree();
+    questionSevenFour();
+
     return 0;
 }

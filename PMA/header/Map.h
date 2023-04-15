@@ -2,6 +2,8 @@
 #define MAP_H_
 
 #include <iostream>
+#include <iostream>
+#include <fstream>
 
 #include "Character.h"
 #include "Hash.h"
@@ -203,12 +205,6 @@ class Map {
             }
             return false;
         }
-
-        // void reproduceCharacter(){
-
-        // }
-
-
 
     private:
         // Y refers to number of rows and is always presented first, 

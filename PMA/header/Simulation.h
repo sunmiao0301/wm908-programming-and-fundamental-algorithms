@@ -259,6 +259,10 @@ class Simulation {
                         cur = cur->next;
                         continue;
                     }
+
+                    // if(cur->data->getLetter() == 'R' || cur-data->getLetter() == 'r'){
+
+                    // }
                     
                     Direction d = cur->data->getDirection(cur->data->getMP());
                     int xNew = cur->data->getNewX(d);
@@ -432,6 +436,128 @@ class Simulation {
             delete container;
             delete map;
         }
+
+        void save(string filename){
+            ofstream file(filename);
+            if (!file.is_open()) {
+                cerr << "Failed to open file " << filename << " for writing." << endl;
+                return;
+            }
+
+            // Write dimensions
+            file << map->getY() << endl;
+            file << map->getX() << endl;
+
+            // Write map
+            for (int i = 0; i < map->getY(); i++) {
+                for (int j = 0; j < map->getX(); j++) {
+                    if(map->getXY(i, j) == ' '){
+                        file << '_';
+                    }
+                    else{
+                        file << map->getXY(i, j);
+                    }
+                }
+                file << endl;
+            }
+            file.close();
+        }
+
+        Character* generateNewCharacter(char ch, int y, int x){
+
+        }
+
+        static Simulation* load(string filename){
+            ifstream file(filename);
+            if (!file.is_open()) {
+                cerr << "Failed to open file " << filename << " for reading." << endl;
+                return nullptr;
+            }
+
+            int Y;
+            int X;
+
+            // Read dimensions
+            file >> Y;
+            file >> X;
+
+            Simulation* simulation = new Simulation(Y, X);
+            simulation->map = new Map(Y, X);
+            simulation->container = new Container();
+            simulation->containerTemp = new Container();
+            
+            int runCount = 0;
+            int vegetationNum = 0;
+            int herbivoreNum = 0;
+            int omnivoreNum = 0;
+            int carnivoreNum = 0;
+
+            // Read map
+            for (int i = 0; i < Y; i++) {
+                for (int j = 0; j < X; j++) {
+                    char ch;
+                    file >> ch;
+                    if(ch == 'h'){
+                        ch == 'H';
+                    }
+                    if(ch == 'c'){
+                        ch = 'C';
+                    }
+                    if(ch == 'o'){
+                        ch = 'O';
+                    }
+                    if(ch == 't' || ch == '\''){
+                        ch = 'T';
+                    }
+                    if(ch == '_'){
+                        Character* character = new Character(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                    }
+                    else if (ch == '#')
+                    {
+                        Character* character = new Hash(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                    }
+                    else if (ch == 'T')
+                    {
+                        Character* character = new Vegetation(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                        vegetationNum++;
+                    }
+                    else if (ch == 'H')
+                    {
+                        Character* character = new Herbivore(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                        herbivoreNum++;
+                    }
+                    else if (ch == 'C')
+                    {
+                        Character* character = new Carnivore(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                        carnivoreNum++;
+                    }
+                    else if (ch == 'O')
+                    {
+                        Character* character = new Omnivore(i, j);
+                        simulation->map->place(i, j, character);
+                        simulation->container->add(character);
+                        omnivoreNum++;
+                    }
+                }
+            }
+            simulation->vegetationNum = vegetationNum;
+            simulation->herbivoreNum = herbivoreNum;
+            simulation->carnivoreNum = carnivoreNum;
+            simulation->omnivoreNum = omnivoreNum;
+            return simulation;
+            file.close();
+        }
+
 };
 
 #endif // SIMULATION_H_
