@@ -463,10 +463,6 @@ class Simulation {
             file.close();
         }
 
-        Character* generateNewCharacter(char ch, int y, int x){
-
-        }
-
         static Simulation* load(string filename){
             ifstream file(filename);
             if (!file.is_open()) {
@@ -557,6 +553,8 @@ class Simulation {
             return simulation;
             file.close();
         }
+
+
 
 };
 

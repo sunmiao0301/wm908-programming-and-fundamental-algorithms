@@ -281,6 +281,24 @@ void questionSevenFour(){
     simulation->run(1);
 }
 
+void questionEightFive(){
+    Simulation* simulation = new Simulation(8, 8);
+    simulation->initCharacter(12, '#');
+    simulation->initCharacter(3, 'H');
+    simulation->initCharacter(3, 'O');
+    simulation->initCharacter(1, 'R');
+    int xR;
+    int yR;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if(simulation->map->getXY(i, j) == 'R'){
+                yR = i;
+                xR = j;
+            }
+        }
+    }
+}
+
 int main() {
     srand(time(NULL));
     
